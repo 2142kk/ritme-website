@@ -56,7 +56,7 @@ export default async function CaseStudies() {
       <div className="max-w-7xl mx-auto">
         <div className="mb-20">
           <div className="flex items-center gap-3 mb-6">
-            <span className="text-sm text-muted-foreground font-mono">[03]</span>
+            <span className="text-sm text-muted-foreground font-mono">[06]</span>
             <span className="text-sm text-muted-foreground">Select engagements</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05] tracking-tight text-balance">

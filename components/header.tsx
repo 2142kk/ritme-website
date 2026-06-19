@@ -30,6 +30,9 @@ export default function Header({ scrollY }: HeaderProps) {
           <Link href="#process" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Process
           </Link>
+          <Link href="#products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            Products
+          </Link>
           <Link href="#work" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
             Work
           </Link>
@@ -73,6 +76,13 @@ export default function Header({ scrollY }: HeaderProps) {
               onClick={() => setMobileMenuOpen(false)}
             >
               Process
+            </Link>
+            <Link
+              href="#products"
+              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Products
             </Link>
             <Link
               href="#work"

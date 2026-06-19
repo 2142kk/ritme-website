@@ -68,7 +68,7 @@ export default function Contact() {
       <div className="max-w-3xl mx-auto">
         <div className="mb-16 text-center">
           <div className="flex items-center justify-center gap-3 mb-6">
-            <span className="text-sm text-muted-foreground font-mono">[04]</span>
+            <span className="text-sm text-muted-foreground font-mono">[07]</span>
             <span className="text-sm text-muted-foreground">For select partners</span>
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-semibold leading-[1.05] tracking-tight text-balance mb-6">
