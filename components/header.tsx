@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link"
-import { useState } from "react"
-import { Menu, X } from "lucide-react"
+import { useState, useEffect } from "react"
+import { Menu, X, Sun, Moon } from "lucide-react"
+import { useTheme } from "next-themes"
 
 interface HeaderProps {
   scrollY: number
@@ -10,6 +11,12 @@ interface HeaderProps {
 
 export default function Header({ scrollY }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const { theme, setTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
   return (
     <header
@@ -41,7 +48,16 @@ export default function Header({ scrollY }: HeaderProps) {
           </Link>
         </div>
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-4">
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              className="p-2.5 hover:bg-secondary rounded-lg transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+          )}
           <Link
             href="#contact"
             className="px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:bg-foreground/90 transition-all duration-300"
@@ -91,13 +107,24 @@ export default function Header({ scrollY }: HeaderProps) {
             >
               Work
             </Link>
-            <Link
-              href="#contact"
-              className="block px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background text-center"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Start a conversation
-            </Link>
+            <div className="flex items-center justify-between pt-2">
+              <Link
+                href="#contact"
+                className="px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background text-center flex-1"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Start a conversation
+              </Link>
+              {mounted && (
+                <button
+                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                  className="ml-3 p-2.5 hover:bg-secondary rounded-lg transition-colors"
+                  aria-label="Toggle theme"
+                >
+                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       )}
