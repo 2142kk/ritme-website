@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { ArrowRight, Loader2, Check } from "lucide-react"
+import { useToast } from "@/hooks/use-toast"
 
 export default function Contact() {
   const [formState, setFormState] = useState({
@@ -14,6 +15,7 @@ export default function Contact() {
   })
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const { toast } = useToast()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -24,17 +26,41 @@ export default function Contact() {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
+      })
 
-    setIsSubmitted(true)
-    setIsSubmitting(false)
+      if (!response.ok) {
+        const error = await response.json()
+        throw new Error(error.error || "Failed to submit form")
+      }
 
-    // Reset after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
-      setFormState({ name: "", email: "", company: "", message: "" })
-    }, 3000)
+      await response.json()
+
+      toast({
+        title: "Success",
+        description: "Thank you for reaching out. We'll be in touch soon.",
+      })
+
+      setIsSubmitted(true)
+
+      // Reset after 3 seconds
+      setTimeout(() => {
+        setIsSubmitted(false)
+        setFormState({ name: "", email: "", company: "", message: "" })
+      }, 3000)
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to submit form",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
