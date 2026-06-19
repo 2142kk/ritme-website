@@ -1,4 +1,4 @@
-import Header from '@/components/header'
+import HeaderClient from '@/components/header-client'
 import Footer from '@/components/footer'
 
 export const metadata = {
@@ -9,7 +9,7 @@ export const metadata = {
 export default function PrivacyPolicyPage() {
   return (
     <main className="w-full">
-      <Header scrollY={0} />
+      <HeaderClient />
 
       <div className="pt-32 pb-32 px-6">
         <div className="max-w-3xl mx-auto">

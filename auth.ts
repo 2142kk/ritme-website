@@ -1,9 +1,11 @@
-import NextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import { compare } from 'bcrypt';
-import db from '@/lib/db';
+import NextAuth from 'next-auth'
+import Credentials from 'next-auth/providers/credentials'
+import { compare } from 'bcryptjs'
+import db from '@/lib/db'
+import { authConfig } from './auth.config'
 
 export const { auth, signIn, signOut, handlers } = NextAuth({
+  ...authConfig,
   providers: [
     Credentials({
       credentials: {
@@ -12,59 +14,47 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
-          return null;
+          return null
         }
 
         try {
           const result = await db.query(
             'SELECT id, email, password_hash FROM admin_users WHERE email = $1',
             [credentials.email]
-          );
+          )
 
-          const user = result.rows[0];
-          if (!user) {
-            return null;
-          }
+          const user = result.rows[0]
+          if (!user) return null
 
           const isValidPassword = await compare(
             credentials.password as string,
             user.password_hash
-          );
+          )
 
-          if (!isValidPassword) {
-            return null;
-          }
+          if (!isValidPassword) return null
 
-          return {
-            id: user.id,
-            email: user.email,
-          };
+          return { id: user.id, email: user.email }
         } catch (error) {
-          console.error('Auth error:', error);
-          return null;
+          console.error('Auth error:', error)
+          return null
         }
       },
     }),
   ],
-  pages: {
-    signIn: '/admin/login',
-  },
   callbacks: {
+    ...authConfig.callbacks,
     async jwt({ token, user }) {
       if (user) {
-        token.id = user.id;
+        token.id = user.id
       }
-      return token;
+      return token
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
+        session.user.id = token.id as string
       }
-      return session;
+      return session
     },
   },
-  session: {
-    strategy: 'jwt',
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-});
+  session: { strategy: 'jwt' },
+})

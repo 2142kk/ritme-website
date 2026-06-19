@@ -5,6 +5,14 @@ import { useState, useEffect } from "react"
 import { Menu, X, Sun, Moon } from "lucide-react"
 import { useTheme } from "next-themes"
 
+const navLinks = [
+  { href: "/#approach", label: "Approach" },
+  { href: "/#process", label: "Process" },
+  { href: "/#products", label: "Products" },
+  { href: "/#work", label: "Work" },
+  { href: "/#contact", label: "Contact" },
+]
+
 interface HeaderProps {
   scrollY: number
 }
@@ -12,11 +20,53 @@ interface HeaderProps {
 export default function Header({ scrollY }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [activeSection, setActiveSection] = useState("")
   const { theme, setTheme } = useTheme()
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  // Intersection Observer to detect active section
+  useEffect(() => {
+    const sectionIds = navLinks.map((l) => l.href.replace("/#", ""))
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id)
+          }
+        })
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: 0 }
+    )
+
+    sectionIds.forEach((id) => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
+  const navLinkClass = (href: string) => {
+    const isActive = activeSection === href.replace("/#", "")
+    return `text-sm transition-colors ${
+      isActive
+        ? "text-foreground font-bold"
+        : "text-muted-foreground font-normal hover:text-foreground"
+    }`
+  }
+
+  const mobileNavLinkClass = (href: string) => {
+    const isActive = activeSection === href.replace("/#", "")
+    return `block text-sm transition-colors ${
+      isActive
+        ? "text-foreground font-bold"
+        : "text-muted-foreground font-normal hover:text-foreground"
+    }`
+  }
 
   return (
     <header
@@ -31,35 +81,25 @@ export default function Header({ scrollY }: HeaderProps) {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-10">
-          <Link href="#approach" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Approach
-          </Link>
-          <Link href="#process" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Process
-          </Link>
-          <Link href="#products" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Products
-          </Link>
-          <Link href="#work" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Work
-          </Link>
-          <Link href="#contact" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-            Contact
-          </Link>
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} className={navLinkClass(link.href)}>
+              {link.label}
+            </Link>
+          ))}
         </div>
 
         <div className="hidden md:flex items-center gap-4">
           {mounted && (
             <button
-              onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2.5 hover:bg-secondary rounded-lg transition-colors"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
             </button>
           )}
           <Link
-            href="#contact"
+            href="/#contact"
             className="px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background hover:bg-foreground/90 transition-all duration-300"
           >
             Start a conversation
@@ -67,64 +107,46 @@ export default function Header({ scrollY }: HeaderProps) {
         </div>
 
         {/* Mobile Menu Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="md:hidden p-2 hover:bg-secondary rounded-lg transition-colors"
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          {mounted && (
+            <button
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              className="p-2 hover:bg-secondary rounded-lg transition-colors"
+              aria-label="Toggle theme"
+            >
+              {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+          )}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="p-2 hover:bg-secondary rounded-lg transition-colors"
+          >
+            {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="md:hidden bg-background border-b border-border">
           <div className="px-6 py-4 space-y-4">
-            <Link
-              href="#approach"
-              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Approach
-            </Link>
-            <Link
-              href="#process"
-              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Process
-            </Link>
-            <Link
-              href="#products"
-              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Products
-            </Link>
-            <Link
-              href="#work"
-              className="block text-sm text-muted-foreground hover:text-foreground transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Work
-            </Link>
-            <div className="flex items-center justify-between pt-2">
+            {navLinks.slice(0, -1).map((link) => (
               <Link
-                href="#contact"
-                className="px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background text-center flex-1"
+                key={link.href}
+                href={link.href}
+                className={mobileNavLinkClass(link.href)}
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Start a conversation
+                {link.label}
               </Link>
-              {mounted && (
-                <button
-                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                  className="ml-3 p-2.5 hover:bg-secondary rounded-lg transition-colors"
-                  aria-label="Toggle theme"
-                >
-                  {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
-                </button>
-              )}
-            </div>
+            ))}
+            <Link
+              href="/#contact"
+              className="block px-5 py-2.5 text-sm font-semibold rounded-full bg-foreground text-background text-center"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              Start a conversation
+            </Link>
           </div>
         </div>
       )}

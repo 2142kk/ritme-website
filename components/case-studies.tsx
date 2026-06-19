@@ -85,7 +85,7 @@ export default async function CaseStudies() {
 
               {/* Content */}
               <div className={`flex flex-col justify-center ${index % 2 === 1 ? "md:order-1" : ""}`}>
-                <span className="text-sm text-muted-foreground font-mono mb-3">{caseStudy.industry}</span>
+                <span className="text-sm text-muted-foreground mb-3">{caseStudy.industry}</span>
                 <h3 className="text-2xl md:text-3xl font-semibold mb-4 tracking-tight">{caseStudy.title}</h3>
                 <p className="text-muted-foreground leading-relaxed mb-6">{caseStudy.description}</p>
                 <div className="p-4 rounded-xl bg-background">

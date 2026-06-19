@@ -6,6 +6,8 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  turbopack: {},
+  serverExternalPackages: ['pg', 'bcrypt', 'bcryptjs'],
 }
 
 export default nextConfig

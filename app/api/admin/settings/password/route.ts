@@ -1,6 +1,6 @@
 import { auth } from '@/auth'
 import db from '@/lib/db'
-import { hash, compare } from 'bcrypt'
+import { hash, compare } from 'bcryptjs'
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
