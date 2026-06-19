@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import {
   LayoutDashboard,
   FileText,
-  Package,
   Layers,
   Settings,
   LogOut,
@@ -20,9 +19,7 @@ import { useState } from 'react';
 const navItems = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
   { href: '/admin/leads', label: 'Leads', icon: FileText },
-  { href: '/admin/case-studies', label: 'Case Studies', icon: Layers },
-  { href: '/admin/products', label: 'Products', icon: Package },
-  { href: '/admin/content', label: 'Content', icon: FileText },
+  { href: '/admin/builder', label: 'Site Builder', icon: Layers },
   { href: '/admin/settings', label: 'Settings', icon: Settings },
 ];
 
@@ -56,7 +53,7 @@ export default function AdminSidebar() {
           <nav className="space-y-2 flex-1">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = pathname === item.href;
+              const isActive = item.href === '/admin' ? pathname === '/admin' : pathname.startsWith(item.href);
               return (
                 <Link
                   key={item.href}
