@@ -30,6 +30,8 @@ export default function AdminSidebar() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  if (pathname === '/admin/login') return null;
+
   return (
     <>
       {/* Mobile menu button */}

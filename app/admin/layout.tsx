@@ -1,13 +1,10 @@
 import { ReactNode } from 'react';
-import { auth } from '@/auth';
 import AdminSidebar from '@/components/admin/sidebar';
 
-export default async function AdminLayout({ children }: { children: ReactNode }) {
-  const session = await auth();
-
+export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex min-h-screen">
-      {session && <AdminSidebar />}
+      <AdminSidebar />
       <main className="flex-1">{children}</main>
     </div>
   );
