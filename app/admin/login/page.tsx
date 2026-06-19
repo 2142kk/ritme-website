@@ -47,7 +47,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
+    <div className="min-h-screen flex items-center justify-center bg-background relative">
+      <a href="/" className="absolute top-6 left-6 text-sm text-muted-foreground hover:text-foreground transition-colors">
+        ← Back to site
+      </a>
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>Admin Login</CardTitle>

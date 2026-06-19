@@ -13,6 +13,7 @@ import {
   LogOut,
   Menu,
   X,
+  ExternalLink,
 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -72,14 +73,23 @@ export default function AdminSidebar() {
             })}
           </nav>
 
-          <Button
-            variant="ghost"
-            className="w-full justify-start gap-3"
-            onClick={() => signOut({ redirectTo: '/admin/login' })}
-          >
-            <LogOut size={20} />
-            <span>Logout</span>
-          </Button>
+          <div className="space-y-1">
+            <Link
+              href="/"
+              className="flex items-center gap-3 px-4 py-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-accent transition-colors text-sm"
+            >
+              <ExternalLink size={16} />
+              <span>View site</span>
+            </Link>
+            <Button
+              variant="ghost"
+              className="w-full justify-start gap-3"
+              onClick={() => signOut({ redirectTo: '/admin/login' })}
+            >
+              <LogOut size={20} />
+              <span>Logout</span>
+            </Button>
+          </div>
         </div>
       </aside>
 
