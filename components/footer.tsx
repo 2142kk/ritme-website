@@ -11,7 +11,7 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-12 mb-16">
           <div>
             <h3 className="text-xl font-medium tracking-tight mb-4">ritmeLab</h3>
-            <p className="text-sm text-muted-foreground leading-relaxed">We build futures.</p>
+            <p className="text-sm text-muted-foreground leading-relaxed">Systems that fit how you work.</p>
           </div>
 
           {/* Quick Links */}
@@ -24,7 +24,7 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#work" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/#work" className="text-muted-foreground hover:text-foreground transition-colors">
                   Work
                 </Link>
               </li>
@@ -41,17 +41,17 @@ export default function Footer() {
             <h4 className="text-sm font-medium mb-6">Approach</h4>
             <ul className="space-y-3 text-sm">
               <li>
-                <Link href="#approach" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/#approach" className="text-muted-foreground hover:text-foreground transition-colors">
                   How We Think
                 </Link>
               </li>
               <li>
-                <Link href="#process" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/#process" className="text-muted-foreground hover:text-foreground transition-colors">
                   Our Process
                 </Link>
               </li>
               <li>
-                <Link href="#work" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/#work" className="text-muted-foreground hover:text-foreground transition-colors">
                   Selected Work
                 </Link>
               </li>

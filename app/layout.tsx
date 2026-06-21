@@ -11,7 +11,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: "ritmeLab — Digital Transformation, Done Right",
-  description: "We build futures. For organizations ready to transform with intelligence and intent.",
+  description: "ritmeLab builds systems that fit how you work — for enterprises, sports teams, entertainment acts, communities, and independent operators.",
 }
 
 export default function RootLayout({

@@ -89,15 +89,15 @@ INSERT INTO products (name, tagline, description, status, link, display_order, i
 
 -- Site Content
 INSERT INTO site_content (section, key, value, is_published) VALUES
-(
-  'hero',
-  'headline',
-  'We don''t build software. We build futures.',
-  true
-),
-(
-  'footer',
-  'email',
-  'hello@ritmelab.io',
-  true
-);
+('hero', 'headline', 'Every great operation runs on rhythm.', true),
+('hero', 'subheadline', 'We work with enterprises, sports teams, entertainment acts, communities, and independent operators — anyone serious about replacing chaos with systems that actually work.', true),
+('approach', 'card_1_title', 'Understand First', true),
+('approach', 'card_1_description', 'We start with your operation, not a product pitch. Before anything is built, we learn how you work, where the friction is, and what better actually means for you.', true),
+('approach', 'card_2_title', 'Scope What''s Needed', true),
+('approach', 'card_2_description', 'Not every problem needs a six-month engagement. We''ll tell you honestly what it would take to fix what''s broken — and whether it''s even worth fixing right now. No overselling, no unnecessary complexity.', true),
+('approach', 'card_3_title', 'Build to Fit', true),
+('approach', 'card_3_description', 'Off-the-shelf tools are built for everyone, which means they''re optimised for no one. We build systems shaped around how you actually operate — whether you''re managing a supply chain or a sold-out show.', true),
+('approach', 'card_4_title', 'Grow With You', true),
+('approach', 'card_4_description', 'When your operation changes, your system should adapt. We build for where you''re going, not just where you are.', true),
+('footer', 'email', 'hello@ritmelab.io', true)
+ON CONFLICT (section, key) DO UPDATE SET value = EXCLUDED.value, is_published = true;

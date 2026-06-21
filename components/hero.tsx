@@ -15,17 +15,17 @@ async function getHeroContent() {
 
     return {
       headline:
-        content.headline || "We don't build software. We build futures.",
+        content.headline || "Every great operation runs on rhythm.",
       subheadline:
         content.subheadline ||
-        "From spreadsheets to enterprise systems. Manual operations to intelligent automation. Whatever you bring to the table, we transform it with intelligence and intent.",
+        "We work with enterprises, sports teams, entertainment acts, communities, and independent operators — anyone serious about replacing chaos with systems that actually work.",
     }
   } catch (error) {
     console.error("Failed to fetch hero content:", error)
     return {
-      headline: "We don't build software. We build futures.",
+      headline: "Every great operation runs on rhythm.",
       subheadline:
-        "From spreadsheets to enterprise systems. Manual operations to intelligent automation. Whatever you bring to the table, we transform it with intelligence and intent.",
+        "We work with enterprises, sports teams, entertainment acts, communities, and independent operators — anyone serious about replacing chaos with systems that actually work.",
     }
   }
 }
